@@ -1,6 +1,7 @@
 package model.states;
 
 import dao.ProdutoDAO;
+import model.Cliente;
 import model.descontos.Desconto;
 import model.impostos.Imposto;
 import model.ItemPedido;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 public class Pedido {
 
     private State state;
-
+    private Cliente cliente;
     private Integer numero;
     private LocalDateTime data;
     private Double valorAPagar;
@@ -25,7 +26,7 @@ public class Pedido {
 
     private ProdutoDAO produtoDAO;
 
-    public Pedido(Integer numero) {
+    public Pedido(Integer numero, Cliente cliente) {
         this.itens = new ArrayList<>();
         this.descontos = new ArrayList<>();
         this.impostos = new ArrayList<>();
@@ -33,7 +34,7 @@ public class Pedido {
         this.data = LocalDateTime.now();
         this.state = new PedidoNovo(this);
         this.produtoDAO = ProdutoDAO.getInstance();
-
+        this.cliente = cliente;
     }
 
     void changeState(State state){
@@ -110,5 +111,13 @@ public class Pedido {
 
     public void setAvaliacao(Integer avaliacao) {
         this.avaliacao = avaliacao;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }
